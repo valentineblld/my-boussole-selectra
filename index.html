@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boussole Selectra SEO</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #f5f5f5; padding: 40px 20px; }
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { font-size: 22px; margin-bottom: 30px; color: #333; }
+    .field { margin-bottom: 20px; }
+    label { display: block; font-weight: bold; margin-bottom: 6px; color: #444; font-size: 14px; }
+    input[type="text"], textarea {
+      width: 100%; padding: 10px 14px; border: 1px solid #ccc; border-radius: 6px;
+      font-size: 14px; font-family: sans-serif; resize: vertical;
+    }
+    input[type="text"]:focus, textarea:focus { outline: none; border-color: #4a90e2; }
+    .btn-generate {
+      background: #4a90e2; color: white; border: none; padding: 12px 30px;
+      border-radius: 25px; font-size: 15px; cursor: pointer; margin-top: 10px;
+    }
+    .btn-generate:hover { background: #357abd; }
+    .output-section { margin-top: 40px; display: none; }
+    .output-section h2 { font-size: 16px; margin-bottom: 10px; color: #333; }
+    #prompt-output {
+      width: 100%; height: 700px; padding: 15px; font-family: monospace;
+      font-size: 13px; border: 1px solid #ccc; border-radius: 6px;
+      resize: vertical; background: #fafafa; white-space: pre-wrap;
+    }
+    .btn-copy {
+      background: #27ae60; color: white; border: none; padding: 12px 30px;
+      border-radius: 25px; font-size: 15px; cursor: pointer; margin-top: 12px;
+    }
+    .btn-copy:hover { background: #1e8449; }
+    .copied-msg { display: none; color: #27ae60; margin-left: 15px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧭 Boussole Selectra SEO</h1>
+
+    <div class="field">
+      <label>Mot(s)-clé(s) principal(aux) visés (séparés par une virgule)</label>
+      <input type="text" id="mots-cles" placeholder="ex : comparateur énergie, fournisseur le moins cher, prix électricité">
+    </div>
+
+    <div class="field">
+      <label>Type de page</label>
+      <input type="text" id="type-page" placeholder="guide / comparatif / landing / autre">
+    </div>
+
+    <div class="field">
+      <label>Intention principale attendue — Issue de l'audit sémantique</label>
+      <input type="text" id="intention" placeholder="ex : page en milieu de parcours de conversion, comparatif des offres les moins chères en comparant a minima les 5 caractéristiques majeurs à savoir">
+    </div>
+
+    <div class="field">
+      <label>Contenu complet de l'article</label>
+      <textarea id="contenu" rows="10" placeholder="Collez ici le code HTML intégral de l'article à analyser"></textarea>
+    </div>
+
+    <button class="btn-generate" onclick="genererPrompt()">Générer le prompt</button>
+
+    <div class="output-section" id="output-section">
+      <h2>📋 Prompt généré — Copiez et collez dans ChatGPT</h2>
+      <textarea id="prompt-output" readonly></textarea>
+      <br>
+      <button class="btn-copy" onclick="copierPrompt()">Copier le prompt</button>
+      <span class="copied-msg" id="copied-msg">✅ Copié !</span>
+    </div>
+  </div>
+
+  <script>
+    function genererPrompt() {
+      var motsCles = document.getElementById('mots-cles').value.trim();
+      var typePage = document.getElementById('type-page').value.trim();
+      var intention = document.getElementById('intention').value.trim();
+      var contenu = document.getElementById('contenu').value.trim();
+
+      if (!motsCles || !typePage || !intention || !contenu) {
+        alert('Veuillez remplir tous les champs.');
+        return;
+      }
+
+      var prompt = `🎭 Rôle
+Tu es un auditeur senior SEO, UX et contenus.
+
+Tu évalues un article selon la méthodologie Selectra, qui considère chaque page comme une brique d'un écosystème de contenus, et non comme un contenu isolé.
+
+⚠️ Règles clés (non négociables)
+Une page peut être bien écrite mais mal notée si elle :
+- n'est pas alignée avec l'intention dominante de la SERP réelle,
+- joue un mauvais rôle dans l'écosystème (mauvais niveau de funnel),
+- tente de couvrir plusieurs intentions incompatibles,
+- est mal maillée (isolée, cannibalisante ou mal reliée).
+
+👉 Le positionnement SEO réel et la cohérence écosystème priment sur la qualité rédactionnelle.
+
+🎯 Objectif de l'audit
+Ton objectif est de vérifier que l'article :
+- répond aux intentions réellement favorisées par Google pour la requête cible,
+- apporte une valeur différenciante par rapport à la SERP existante,
+- joue le bon rôle stratégique (page socle, page décisionnelle, page d'action),
+- fait avancer l'utilisateur au bon moment de son parcours,
+- est lisible et exploitable par Google et les IA.
+
+⚠️ Important
+Si la page ne se positionne pas bien ou est structurellement mal alignée, tu dois baisser la note, même si le contenu est riche et pertinent.
+
+🧠 Ajustement stratégique - Contexte du site
+Je travaille sur un site généraliste qui couvre :
+- énergie,
+- télécom,
+- assurance,
+- finance,
+- déménagement.
+
+Le déménagement est un moment de vie, pas un silo métier.
+Google accepte (et favorise souvent) des pages "problème juridique global" sur ce type de site.
+
+👉 La bonne stratégie n'est pas la scission, mais le pilotage d'intention.
+
+---
+
+Mots clés : ${motsCles}
+Type de page : ${typePage}
+Intention principale attendue : ${intention}
+
+Contenu de l'article :
+${contenu}
+
+---
+
+🧠 Évaluation selon la méthodologie Selectra
+
+1️⃣ Alignement SERP & audit sémantique — /5
+Évalue si l'article :
+- est aligné avec l'intention dominante observée en SERP,
+- correspond au format majoritaire favorisé par Google (guide court, tableau, comparatif, outil),
+- hiérarchise clairement intention principale vs intentions secondaires,
+- ne tente pas de faire plusieurs pages en une.
+➡️ Note /5 + justification factuelle (max. 3 lignes)
+⚠️ Une mauvaise adéquation SERP plafonne la note à 3, même si le contenu est bon.
+
+2️⃣ Réponse immédiate à l'intention SERP — /5
+Analyse si :
+- la réponse attendue par Google est visible en moins de 10 secondes,
+- la page délivre un verdict clair (oui / non / ça dépend + critères),
+- l'utilisateur comprend immédiatement s'il est au bon endroit.
+➡️ Note /5 + justification factuelle
+
+3️⃣ Rôle de la page dans l'écosystème — /5
+Évalue si l'article :
+- joue un rôle clair et unique (entrée, approfondissement, décision, conversion),
+- est positionné au bon niveau de funnel pour la requête,
+- s'adresse au bon niveau de maturité utilisateur,
+- évite les conflits et cannibalisations avec d'autres pages du site.
+➡️ Note /5 + justification factuelle
+
+4️⃣ Progression utilisateur, maillage & logique de parcours — /5
+Analyse si :
+- la page est clairement reliée aux pages amont (définition, pédagogie, contexte),
+- elle oriente vers les pages aval pertinentes (comparatifs, décisions, actions),
+- les ancres sont cohérentes avec l'intention de chaque page liée,
+- le maillage évite toute cannibalisation sémantique interne,
+- la page fonctionne comme un nœud de parcours, pas comme un silo.
+➡️ Note /5 + justification factuelle
+⚠️ Un maillage faible ou incohérent plafonne la note à 3, même si le contenu est bon.
+
+5️⃣ Qualité éditoriale & exploitabilité moteurs / IA — /5
+Évalue si :
+- l'introduction est courte, informative et décisionnelle,
+- le contenu est scannable et mobile-first,
+- les sections sont autonomes et réutilisables,
+- l'expertise est assumée (méthode, critères, prises de position),
+- la structure est exploitable par Google et les IA (titres clairs, FAQ, logique HTML).
+⚠️ Un contenu trop dense ou trop avancé pour une requête simple doit être pénalisé.
+➡️ Note /5 + justification factuelle
+
+6️⃣ Qualité et Pertinence de l'Information — /5
+Évalue la capacité de l'article à :
+- Apporter des informations de haute qualité, précises, bien documentées et vérifiables.
+- Inclure les sources directement à côté des données présentées.
+- Offrir une valeur différenciante par rapport aux autres pages présentes sur la SERP.
+- Garantir que les données sont à jour.
+
+📊 Verdict final
+Score total : __ /30
+Statut :
+- ❌ < 18 : hors stratégie / mal positionné
+- ⚠️ 18–21 : publiable mais mal aligné SERP
+- ✅ 22–25 : bon standard Selectra
+- 🌟 26–30 : page pilier / référence SERP
+
+🛠️ Améliorations prioritaires
+Pour chaque pilier noté < 4, indiquer :
+- 1 amélioration structurelle (pas cosmétique),
+- directement actionnable,
+- visant à réaligner la page avec son rôle réel dans l'écosystème.`;
+
+      document.getElementById('prompt-output').value = prompt;
+      document.getElementById('output-section').style.display = 'block';
+      document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copierPrompt() {
+      var textarea = document.getElementById('prompt-output');
+      textarea.select();
+      navigator.clipboard.writeText(textarea.value).then(function() {
+        var msg = document.getElementById('copied-msg');
+        msg.style.display = 'inline';
+        setTimeout(function() { msg.style.display = 'none'; }, 3000);
+      });
+    }
+  </script>
+</body>
+</html>

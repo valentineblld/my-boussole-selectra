@@ -77,8 +77,9 @@
       var typePage = document.getElementById('type-page').value.trim();
       var intention = document.getElementById('intention').value.trim();
       var contenu = document.getElementById('contenu').value.trim();
+      var urlPage = document.getElementById('url-page').value.trim();
 
-      if (!motsCles || !typePage || !intention || !contenu) {
+      if (!motsCles || !typePage || !intention || !contenu || !urlPage) {
         alert('Veuillez remplir tous les champs.');
         return;
       }
@@ -129,6 +130,10 @@ Aucun ajustement nécessaire, ils s’affichent normalement dans l’aperçu.
 Mots clés : ${motsCles}
 Type de page : ${typePage}
 Intention principale attendue : ${intention}
+<div class="field">
+  <label>URL de la page à analyser</label>
+  <input type="text" id="url-page" placeholder="https://exemple.com/ma-page">
+</div>
 
 Contenu de l'article :
 ${contenu}

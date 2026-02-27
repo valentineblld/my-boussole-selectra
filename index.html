@@ -121,14 +121,8 @@ Google accepte (et favorise souvent) des pages "problème juridique global" sur 
 
 👉 La bonne stratégie n'est pas la scission, mais le pilotage d'intention.
 
----
-
-Mots clés : ${motsCles}
-Type de page : ${typePage}
-Intention principale attendue : ${intention}
-
-Contenu de l'article :
-${contenu}
+💡 Note : les éléments [template:…] proviennent de notre base de données et se complètent seuls (prix, tableaux, débits…).
+Aucun ajustement nécessaire, ils s’affichent normalement dans l’aperçu.
 
 ---
 
@@ -198,6 +192,15 @@ Pour chaque pilier noté < 4, indiquer :
 - 1 amélioration structurelle (pas cosmétique),
 - directement actionnable,
 - visant à réaligner la page avec son rôle réel dans l'écosystème.`;
+
+---
+
+Mots clés : ${motsCles}
+Type de page : ${typePage}
+Intention principale attendue : ${intention}
+
+Contenu de l'article :
+${contenu}
 
       document.getElementById('prompt-output').value = prompt;
       document.getElementById('output-section').style.display = 'block';

@@ -59,6 +59,11 @@
   <label>URL de la page à analyser</label>
   <input type="text" id="url-page" placeholder="https://exemple.com/ma-page">
     </div>
+
+    <div class="field">
+  <label>URL du sitemap du site</label>
+  <input type="text" id="sitemap" placeholder="https://exemple.com/sitemap.xml">
+    </div>
     
     <div class="field">
       <label>Contenu complet de l'article</label>
@@ -83,8 +88,9 @@
       var intention = document.getElementById('intention').value.trim();
       var contenu = document.getElementById('contenu').value.trim();
       var urlPage = document.getElementById('url-page').value.trim();
+      var sitemap = document.getElementById('sitemap').value.trim();
 
-      if (!motsCles || !typePage || !intention || !contenu || !urlPage) {
+      if (!motsCles || !typePage || !intention || !contenu || !urlPage || !sitemap) {
         alert('Veuillez remplir tous les champs.');
         return;
       }
@@ -136,9 +142,7 @@ Mots clés : ${motsCles}
 Type de page : ${typePage}
 Intention principale attendue : ${intention}
 URL : ${urlPage}
-
-Contenu de l'article :
-${contenu}
+Sitemap : ${sitemap}
 
 ---
 
@@ -207,7 +211,10 @@ Statut :
 Pour chaque pilier noté < 4, indiquer :
 - 1 amélioration structurelle (pas cosmétique),
 - directement actionnable,
-- visant à réaligner la page avec son rôle réel dans l'écosystème.`;
+- visant à réaligner la page avec son rôle réel dans l'écosystème.
+
+Contenu de l'article :
+${contenu}`;
 
       document.getElementById('prompt-output').value = prompt;
       document.getElementById('output-section').style.display = 'block';
